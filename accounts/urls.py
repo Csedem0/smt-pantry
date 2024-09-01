@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -10,3 +11,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', views.custom_logout, name='logout'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
