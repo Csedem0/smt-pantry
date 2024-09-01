@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inventory</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <h1>Product Inventory</h1>
+        <!-- Bootstrap JavaScript (optional if you want to use features like closing alerts) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous"></script>
+    
+        {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+
+    <hr>
+
+    <h2>Products in Pantry</h2>
+    <ul>
+        {% for product in pantry_products %}
+            <li>{{ product.name }} - Expiry Date: {{ product.expiry_date }} {% if product.days_remaining %}- Days Remaining: {{ product.days_remaining }}{% endif %}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Bootstrap JavaScript (optional if you want to use features like closing alerts) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous"></script>
+
+    {% if messages %}
+        <div class="alert alert-info" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

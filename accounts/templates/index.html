@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pantry Dashboard</title>
+    {% load static %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+        }
+
+        nav a:hover {
+            background-color: #f8f8f8;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+        }
+
+        .navbar-toggler {
+            display: block;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 20px;
+        }
+
+        .navbar-nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .navbar-nav.show {
+            display: flex;
+        }
+
+        /* Alert Styling */
+        .alert {
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            z-index: 1050;
+            text-align: center;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert.alert-info {
+            background-color: #17a2b8;
+        }
+
+        .alert.alert-success {
+            background-color: #28a745;
+        }
+
+        .alert.alert-warning {
+            background-color: #ffc107;
+        }
+
+        .alert.alert-danger {
+            background-color: #dc3545;
+        }
+
+        .alert .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .alert .close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous"></script>
+
+    {% if messages %}
+        <div class="alert alert-info show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
+        </div>
+    {% endif %}
+    
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-food-menu'></i>
+            <div class="logo-name"><span>SMR</span>Pantry</div>
+        </a>
+        <ul class="side-menu">
+            <li><a href="#"><i class='bx bx-home'></i>Dashboard</a></li>
+            <li><a href="#"><i class='bx bx-list-ul'></i>Inventory</a></li>
+            <li class="active"><a href="#"><i class='bx bx-calendar'></i>Expiry Tracker</a></li>
+            <li><a href="#"><i class='bx bx-bell'></i>Alerts</a></li>
+            <li><a href="#"><i class='bx bx-cog'></i>Settings</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu navbar-toggler'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">{{ messages|length }}</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-2LoxZZsAXJ0nJSh8NNyCkcwpTvKSoGwGvw&s" alt="Profile Image">
+            </a>
+            </a>
+        </nav>
+        <!-- End of Navbar -->
+
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>My Pantry</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        /
+                        <li><a href="#" class="active">Inventory</a></li>
+                    </ul>
+                </div>
+                <a href="#" class="report">
+                    <i class='bx bx-cloud-download'></i>
+                    <span>Download CSV</span>
+                </a>
+            </div>
+            <!-- Insights -->
+            <ul class="insights">
+                <li>
+                    <i class='bx bx-calendar-check'></i>
+                    <span class="info">
+                        <h3>100</h3>
+                        <p>Total Items</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-show-alt'></i>
+                    <span class="info">
+                        <h3>3,944</h3>
+                        <p>Inventory Checks</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-line-chart'></i>
+                    <span class="info">
+                        <h3>14,721</h3>
+                        <p>Searches</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-dollar-circle'></i>
+                    <span class="info">
+                        <h3>$6,742</h3>
+                        <p>Total Value</p>
+                    </span>
+                </li>
+            </ul>
+            <!-- End of Insights -->
+
+            <div class="bottom-data">
+                <div class="orders">
+                    <div class="header">
+                        <i class='bx bx-receipt'></i>
+                        <h3>Recent Additions</h3>
+                        <i class='bx bx-filter'></i>
+                        <i class='bx bx-search'></i>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Expiry Date</th>
+                                <th>Days Remaining</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in pantry_products %}
+                            <tr>
+                                <td>
+                                    <!-- <img src="images/blank-person-icon-9.jpg"> -->
+                                    <p>{{ product.name }}</p>
+                                </td>
+                                <td>{{ product.expiry_date }}</td>
+                                <td><span class="status completed">{{ product.days_remaining }}</span></td>
+                                <td>
+                                    <form action="{% url 'delete_product' product.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reminders -->
+                <div class="reminders">
+                    <h3>Add New Item</h3>
+                    <p>Keep your pantry smart and organized. Add new items and set expiry dates to get timely alerts before they expire.</p>
+                    <p>Date format: mm/dd/yyyy</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Add Item</button>
+                    </form>
+                </div>
+                <!-- End of Reminders -->
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+
+</html>
