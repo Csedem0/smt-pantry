@@ -60,76 +60,88 @@
         .navbar-nav.show {
             display: flex;
         }
+        
 
         /* Alert Styling */
-        .alert {
-            padding: 15px;
-            margin: 20px auto;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 16px;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            z-index: 1050;
-            text-align: center;
-            display: none;
-        }
+        .alert-container {
+    position: fixed;
+    top: 60px; /* Adjust based on navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 600px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .alert.show {
-            display: block;
-        }
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    position: relative;
+}
 
-        .alert.alert-info {
-            background-color: #17a2b8;
-        }
+.alert.alert-info {
+    background-color: #17a2b8;
+}
 
-        .alert.alert-success {
-            background-color: #28a745;
-        }
+.alert.alert-success {
+    background-color: #28a745;
+}
 
-        .alert.alert-warning {
-            background-color: #ffc107;
-        }
+.alert.alert-warning {
+    background-color: #ffc107;
+}
 
-        .alert.alert-danger {
-            background-color: #dc3545;
-        }
+.alert.alert-danger {
+    background-color: #dc3545;
+}
 
-        .alert .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 18px;
-            cursor: pointer;
-            color: #fff;
-        }
+.alert .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #fff;
+}
 
-        .alert .close:hover {
-            opacity: 1;
-        }
+.alert .close:hover {
+    opacity: 1;
+}
     </style>
 </head>
 
 <body>
     <!-- Sidebar -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous">
+    </script>
 
-    {% if messages %}
-        <div class="alert alert-info show" role="alert">
+    <!-- Notification Alerts Container -->
+    <div class="alert-container">
+        {% if messages %}
             {% for message in messages %}
-                {{ message }}
+                <div class="alert alert-info show" role="alert">
+                    {{ message }}
+                    <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
+                </div>
             {% endfor %}
-            <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
     
     <div class="sidebar">
         <a href="#" class="logo">
@@ -167,10 +179,11 @@
             </form>
             <input type="checkbox" id="theme-toggle" hidden>
             <label for="theme-toggle" class="theme-toggle"></label>
-            <a href="#" class="notif">
+            <a href="#" class="notif" onclick="location.reload();">
                 <i class='bx bx-bell'></i>
                 <span class="count">{{ messages|length }}</span>
             </a>
+            
             <a href="#" class="profile">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-2LoxZZsAXJ0nJSh8NNyCkcwpTvKSoGwGvw&s" alt="Profile Image">
             </a>
