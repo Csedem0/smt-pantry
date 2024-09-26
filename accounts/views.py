@@ -56,6 +56,12 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+def profile(request):
+    return render(request, 'profile.html')
+
+def share(request):
+    return render(request, 'share.html')
+
 def custom_logout(request):
     logout(request)
     return redirect('login')

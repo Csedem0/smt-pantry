@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Smart Pantry System</title>
+    {% load static %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #3498db;
+            color: white;
+        }
+        .header h1 {
+            font-size: 2rem;
+        }
+        .header nav {
+            display: flex;
+            gap: 15px;
+        }
+        .header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .profile-section {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .profile-card {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .profile-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .profile-card p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .profile-card .edit-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #27ae60;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .profile-card .edit-btn:hover {
+            background-color: #2ecc71;
+        }
+        .account-settings {
+            flex: 2;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .account-settings h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        .settings-form {
+            display: grid;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .form-group button {
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .form-group button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background-color: #3498db;
+            color: white;
+        }
+        /* Responsive design */
+        @media(max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+        @media screen and (max-width: 768px) {
+    .sidebar{
+        width: 200px;
+    }
+
+    .content{
+        width: calc(100% - 60px);
+        left: 200px;
+    }
+
+}
+
+@media screen and (max-width: 576px) {
+    
+    .content nav form .form-input input{
+        display: none;
+    }
+
+    .content nav form .form-input button{
+        width: auto;
+        height: auto;
+        background: transparent;
+        color: var(--dark);
+        border-radius: none;
+    }
+
+    .content nav form.show .form-input input{
+        display: block;
+        width: 100%;
+    }
+
+    .content nav form.show .form-input button{
+        width: 36px;
+        height: 100%;
+        color: var(--light);
+        background: var(--danger);
+        border-radius: 0 36px 36px 0;
+    }
+
+    .content nav form.show~.notif, .content nav form.show~.profile{
+        display: none;
+    }
+
+    .content main .insights {
+        grid-template-columns: 1fr;
+    }
+
+    .content main .bottom-data .header{
+        min-width: 340px;
+    }
+
+    .content main .bottom-data .orders table{
+        min-width: 340px;
+    }
+
+    .content main .bottom-data .reminders .task-list{
+        min-width: 340px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-+G5SWtX7WNVONuY2V2b04Gfeu7erFapzThXjWTha1ZDRpU3KMs5c1mpYqgxTgPQ2" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-3Dp2lkFIm8t+1yU4JjBf4tPJv8v7dKjE1J2xghW3RXtV4iRbOj4+2P00aArJhN1f" crossorigin="anonymous">
+    </script>
+
+    <!-- Notification Alerts Container -->
+    <div class="alert-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info show" role="alert">
+                    {{ message }}
+                    <span class="close" onclick="this.parentElement.style.display='none'">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-food-menu'></i>
+            <div class="logo-name"><span>SMR</span>Pantry</div>
+        </a>
+        <ul class="side-menu">
+            <li><a href="{% url 'home' %}"><i class='bx bx-home'></i>Dashboard</a></li>
+            <li><a href="{% url 'share' %}"><i class='bx bx-list-ul'></i>Community</a></li>
+            <!-- <li><a href="#" onclick="location.reload();"><i class='bx bx-bell'></i>Alerts</a></li> -->
+            <li class="active"><a href="{% url 'profile' %}"><i class='bx bx-cog'></i>Settings</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu navbar-toggler' ></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            
+            <a href="{% url 'profile' %}" class="profile">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-2LoxZZsAXJ0nJSh8NNyCkcwpTvKSoGwGvw&s" alt="Profile Image">
+            </a>
+            </a>
+        </nav>
+        <!-- End of Navbar -->
+    <!-- Profile Section -->
+    <div class="container">
+        <div class="profile-section">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <h2>User Profile</h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-2LoxZZsAXJ0nJSh8NNyCkcwpTvKSoGwGvw&s" alt="Profile Picture">
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Email:</strong> john.doe@example.com</p>
+                <p><strong>Member Since:</strong> January 2024</p>
+                <a href="#" class="edit-btn">Edit Profile</a>
+            </div>
+
+            <!-- Account Settings Form -->
+            <div class="account-settings">
+                <h2>Account Settings</h2>
+                <form action="#" method="POST" class="settings-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="JohnDoe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="john.doe@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">New Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter new password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preferences">Pantry Preferences</label>
+                        <select id="preferences" name="preferences">
+                            <option value="notify_expiring">Notify on Expiring Items</option>
+                            <option value="notify_low_stock">Notify on Low Stock</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2024 Smart Pantry System. All rights reserved.</p>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

@@ -149,11 +149,10 @@
             <div class="logo-name"><span>SMR</span>Pantry</div>
         </a>
         <ul class="side-menu">
-            <li><a href="#"><i class='bx bx-home'></i>Dashboard</a></li>
-            <li><a href="#"><i class='bx bx-list-ul'></i>Inventory</a></li>
-            <li class="active"><a href="#"><i class='bx bx-calendar'></i>Expiry Tracker</a></li>
-            <li><a href="#"><i class='bx bx-bell'></i>Alerts</a></li>
-            <li><a href="#"><i class='bx bx-cog'></i>Settings</a></li>
+            <li class="active"><a href="{% url 'home' %}"><i class='bx bx-home'></i>Dashboard</a></li>
+            <li><a href="{% url 'share' %}"><i class='bx bx-list-ul'></i>Community</a></li>
+            <li><a href="#" onclick="location.reload();"><i class='bx bx-bell'></i>Alerts</a></li>
+            <li><a href="{% url 'profile' %}"><i class='bx bx-cog'></i>Settings</a></li>
         </ul>
         <ul class="side-menu">
             <li>
@@ -184,7 +183,7 @@
                 <span class="count">{{ messages|length }}</span>
             </a>
             
-            <a href="#" class="profile">
+            <a href="{% url 'profile' %}" class="profile">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-2LoxZZsAXJ0nJSh8NNyCkcwpTvKSoGwGvw&s" alt="Profile Image">
             </a>
             </a>
