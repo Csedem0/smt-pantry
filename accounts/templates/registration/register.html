@@ -92,7 +92,6 @@
                 <!-- Update the href attributes in the following li elements with the correct URLs -->
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="{% url 'result' %}" class="nav-link">Result</a></li>
                 <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
                 {% else %}
                 <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Register</a></li>

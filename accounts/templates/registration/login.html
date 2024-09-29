@@ -80,7 +80,7 @@
         <div class="container" style="height: fit-content;">
             <div class="navbar-translate">
                 <a class="navbar-brand" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 20px;" href="#" rel="tooltip" title="" data-placement="bottom" target="_blank" data-original-title="Designed by Invision. Coded by Creative Tim">
-                  SMR PANTRY❤️
+                  SMR PANTRY
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar top-bar"></span>
@@ -92,7 +92,6 @@
                 <!-- Update the href attributes in the following li elements with the correct URLs -->
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{% url 'result' %}" class="nav-link">Result</a></li>
                     <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
                     {% else %}
                     <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
