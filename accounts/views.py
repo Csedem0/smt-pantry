@@ -13,7 +13,9 @@ def home(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
-            product = form.save()
+            product = form.save(commit=False)
+            product.user = request.user  # Associate the product with the logged-in user
+            product.save()
             # Calculate time difference between expiry date and current date
             time_difference = product.expiry_date - timezone.now().date()
             # If expiry date is within 3 days, send a notification
@@ -23,8 +25,8 @@ def home(request):
             return redirect('home')
     else:
         form = ProductForm()
-    
-    pantry_products = Product.objects.all()
+
+    pantry_products = Product.objects.filter(user=request.user)  # Filter products by user
     for product in pantry_products:
         # Calculate days remaining for each product
         product.days_remaining = (product.expiry_date - timezone.now().date()).days
@@ -34,12 +36,17 @@ def home(request):
     return render(request, 'index.html', {'form': form, 'pantry_products': pantry_products})
 
 
+
 @login_required
 def delete_product(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    product.delete()
-    messages.success(request, 'Product deleted successfully!')
+    try:
+        product = Product.objects.get(pk=product_id, user=request.user)  # Get product by user
+        product.delete()
+        messages.success(request, 'Product deleted successfully!')
+    except Product.DoesNotExist:
+        messages.error(request, 'Product not found or you do not have permission to delete it.')
     return redirect('home')
+
 
 def product_details(request, product_id):
     product = Product.objects.get(id=product_id)
